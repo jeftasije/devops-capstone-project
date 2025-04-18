@@ -145,7 +145,7 @@ class TestAccountService(TestCase):
     def test_get_all_accounts(self):
         """It should return a list of all accounts."""
         number_of_accounts = 3
-        accounts = self._create_accounts(number_of_accounts)
+        self._create_accounts(number_of_accounts)
         response = self.client.get(f"{BASE_URL}",)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.get_json()), number_of_accounts)
@@ -156,11 +156,11 @@ class TestAccountService(TestCase):
         response = self.client.post(BASE_URL, json=account.serialize())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        new_account  = response.get_json()
-        new_account ["phone_number"] = "0123456789"
+        new_account = response.get_json()
+        new_account["phone_number"] = "0123456789"
         response = self.client.put(
             f"{BASE_URL}/{new_account['id']}",
-            json=new_account 
+            json=new_account
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         updated_account = response.get_json()
